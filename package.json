@@ -1,0 +1,26 @@
+{
+  "name": "sing_react",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
+  },
+  "author": "hx",
+  "license": "ISC",
+  "description": "webpack+react",
+  "keywords": [
+    "webpack",
+    "react"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}
