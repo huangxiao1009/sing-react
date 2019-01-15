@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --open --color"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -16,7 +18,8 @@
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   },
   "author": "hx",
   "license": "ISC",
@@ -27,5 +30,6 @@
   ],
   "dependencies": {
     "lodash": "^4.17.11"
-  }
+  },
+  "sideEffects":[]
 }

@@ -1,6 +1,7 @@
 /**
  * Created by hx on 2019/1/7.
  */
+const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 const fileDistPath = path.resolve(__dirname, 'dist/');
@@ -42,13 +43,27 @@ function initHtmlWebpackPlugin() {
 }
 initHtmlWebpackPlugin();
 //每次都清除一次dist文件夹
-plugins.push(new CleanWebpackPlugin(['dist']));
+plugins.push(new CleanWebpackPlugin(['dist/']));
+//模块热更新
+plugins.push(new webpack.NamedModulesPlugin());
+plugins.push(new webpack.HotModuleReplacementPlugin());
 
 
 module.exports = {
     context: __dirname,
     mode: 'development',
+    // mode: 'production',
     entry: entries,
+    devtool:"inline-source-map",//开发模式
+    devServer:{
+        contentBase:path.join(__dirname,'dist'),
+        compress:true,
+        port: 9000,
+        index:'html/index.html',
+        openPage:'html/index.html',
+        // hot:true,
+        // noInfo:true
+    },
     output: {
         path: fileDistPath,
         filename: "js/[name].bundle.js",
