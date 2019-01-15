@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/a.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -119,15 +119,27 @@ eval("module.exports = function(module) {\n\tif (!module.webpackPolyfill) {\n\t\
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "./src/js/a.js":
+/*!*********************!*\
+  !*** ./src/js/a.js ***!
+  \*********************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);\n/**\r\n * Created by huangxiao on 2019/1/14.\r\n */\r\n\r\nfunction component() {\r\n    var element = document.createElement('div');\r\n    element.innerHTML =  lodash__WEBPACK_IMPORTED_MODULE_0___default.a.join(['hello','webpack',' -----'])\r\n    return element;\r\n}\r\ndocument.body.appendChild(component());\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _b_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./b.js */ \"./src/js/b.js\");\n/**\r\n * Created by huangxiao on 2019/1/14.\r\n */\r\n\r\n\r\n// import '../src/index.css'\r\nfunction component() {\r\n    var element = document.createElement('div');\r\n    var btn = document.createElement('button');\r\n    element.innerHTML =  lodash__WEBPACK_IMPORTED_MODULE_0___default.a.join(['hello','webpack'],' 000');\r\n    element.innerHTML =  'click me!';\r\n    element.classList.add('hello');\r\n    btn.onclick=_b_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"];\r\n    element.appendChild(btn);\r\n    return element;\r\n}\r\ndocument.body.appendChild(component());\n\n//# sourceURL=webpack:///./src/js/a.js?");
+
+/***/ }),
+
+/***/ "./src/js/b.js":
+/*!*********************!*\
+  !*** ./src/js/b.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return printMe; });\n/**\r\n * Created by huangxiao on 2019/1/15.\r\n */\r\nfunction printMe() {\r\n    console.log('i got called from print.js!')\r\n}\n\n//# sourceURL=webpack:///./src/js/b.js?");
 
 /***/ })
 
