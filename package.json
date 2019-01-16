@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open --color"
+    "start": "webpack-dev-server --open --color --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -19,7 +19,8 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.1"
   },
   "author": "hx",
   "license": "ISC",
@@ -29,7 +30,8 @@
     "react"
   ],
   "dependencies": {
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "uglifyjs-webpack-plugin": "^2.1.1"
   },
-  "sideEffects":[]
+  "sideEffects": []
 }

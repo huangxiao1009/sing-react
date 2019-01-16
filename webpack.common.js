@@ -1,3 +1,4 @@
+
 /**
  * Created by hx on 2019/1/7.
  */
@@ -35,7 +36,7 @@ function initHtmlWebpackPlugin() {
             },
         };
         const filenameShort = filename.split('.')[0];
-        entries[filenameShort] && (HtmlWebpackPluginOptions.chunks = [filenameShort]);
+        entries[filenameShort] && (HtmlWebpackPluginOptions.chunks = ['runtime','commons',filenameShort]);
         let htmlPlu = new HtmlWebpackPlugin(HtmlWebpackPluginOptions);
         plugins.push(htmlPlu);
 
@@ -44,27 +45,11 @@ function initHtmlWebpackPlugin() {
 initHtmlWebpackPlugin();
 //每次都清除一次dist文件夹
 plugins.push(new CleanWebpackPlugin(['dist/']));
-//模块热更新
-plugins.push(new webpack.NamedModulesPlugin());
-plugins.push(new webpack.HotModuleReplacementPlugin());
 
 
 module.exports = {
     context: __dirname,
-    mode: 'development',
-    // mode: 'production',
-
     entry: entries,
-    devtool:"inline-source-map",//开发模式
-    devServer:{
-        contentBase:path.join(__dirname,'dist'),
-        compress:true,
-        port: 9000,
-        index:'html/index.html',
-        openPage:'html/index.html',
-        // hot:true,
-        // noInfo:true
-    },
     output: {
         path: fileDistPath,
         filename: "js/[name].bundle.js",
@@ -81,6 +66,37 @@ module.exports = {
             },
             {test: /\.html$/, loader: 'html-loader'}
         ]
+    },
+    optimization: {
+        //minimize: env === 'production' ? true : false, //是否进行代码压缩
+        minimize: true, //是否进行代码压缩
+        splitChunks: {
+            chunks: "async",
+            minSize: 30000, //模块大于30k会被抽离到公共模块
+            minChunks: 1, //模块出现1次就会被抽离到公共模块
+            maxAsyncRequests: 5, //异步模块，一次最多只能被加载5个
+            maxInitialRequests: 3, //入口模块最多只能加载3个
+            name: true,
+            cacheGroups: {
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+                commons: {
+                    name: "commons",
+                    chunks: "initial",
+                    minChunks: 2
+                },
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                }
+            }
+        },
+        runtimeChunk:{
+            name: "runtime"
+        }
     },
     plugins: plugins,
 };

@@ -16,4 +16,4 @@ function component() {
     return element;
 }
 document.body.appendChild(component());
-console.log(square(2),'=========');
+console.log(square(2),'=========')
