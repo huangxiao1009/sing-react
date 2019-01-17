@@ -52,7 +52,7 @@ module.exports = {
     entry: entries,
     output: {
         path: fileDistPath,
-        filename: "js/[name].bundle.js",
+        filename: "js/[name].[chunkhash].js",
         // publicPath:"https://music.51vv.com"
     },
     module: {
