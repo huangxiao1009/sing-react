@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open --color --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "start": "webpack-dev-server --env.NODE_ENV=dev --open --color --config webpack.dev.js",
+    "build": "webpack --env.NODE_ENV=prod --config webpack.prod.js"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
