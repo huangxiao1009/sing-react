@@ -1,4 +1,3 @@
-
 /**
  * Created by hx on 2019/1/7.
  */
@@ -27,16 +26,17 @@ function initHtmlWebpackPlugin() {
     const files = fs.readdirSync(path.join(fileSrcPath, 'html'));
     files.forEach(function (filename) {
         let HtmlWebpackPluginOptions = {
-            template: path.join(fileSrcPath, 'html', filename),
+            template: path.join(fileSrcPath, 'html',filename),
             title: 'Output Man....',
             filename: `html/${filename}`,
+            inject:'body',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true
             },
         };
         const filenameShort = filename.split('.')[0];
-        entries[filenameShort] && (HtmlWebpackPluginOptions.chunks = ['runtime','commons',filenameShort]);
+        entries[filenameShort] && (HtmlWebpackPluginOptions.chunks = ['runtime', 'commons', filenameShort]);
         let htmlPlu = new HtmlWebpackPlugin(HtmlWebpackPluginOptions);
         plugins.push(htmlPlu);
 
@@ -52,7 +52,7 @@ module.exports = {
     entry: entries,
     output: {
         path: fileDistPath,
-        filename: "js/[name].[chunkhash].js",
+        filename: "js/[name].[hash].js",
         // publicPath:"https://music.51vv.com"
     },
     module: {
@@ -64,7 +64,21 @@ module.exports = {
                     'css-loader'
                 ]
             },
-            {test: /\.html$/, loader: 'html-loader'}
+            {
+                test: /\.html$/,
+                // loader: 'html-loader'
+            },
+            {
+                test: /\.(js|jsx)$/,
+                include: path.resolve(__dirname, 'src/js'),
+                use:{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'react'],
+                    }
+                },
+                exclude: /node_modules/
+            }
         ]
     },
     optimization: {
@@ -94,7 +108,7 @@ module.exports = {
                 }
             }
         },
-        runtimeChunk:{
+        runtimeChunk: {
             name: "runtime"
         }
     },

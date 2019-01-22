@@ -12,7 +12,7 @@ module.exports = env =>{
         devtool:'source-map',
         plugins: [
             new UglifyJSPlugin({
-                sourceMap:true
+                // sourceMap:true
             })
         ]
     });

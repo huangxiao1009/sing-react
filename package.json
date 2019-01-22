@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --env.NODE_ENV=dev --open --color --config webpack.dev.js",
+    "dev": "webpack-dev-server --watch --env.NODE_ENV=dev --open --color --config webpack.dev.js",
     "build": "webpack --env.NODE_ENV=prod --config webpack.prod.js"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
     "babel-preset-es2015": "^6.24.1",
@@ -31,6 +32,8 @@
   ],
   "dependencies": {
     "lodash": "^4.17.11",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "uglifyjs-webpack-plugin": "^2.1.1"
   },
   "sideEffects": []
