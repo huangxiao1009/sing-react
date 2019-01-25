@@ -78,6 +78,17 @@ module.exports = {
                     }
                 },
                 exclude: /node_modules/
+            },
+            {
+                test: /\.(js|jsx)$/,
+                include: path.resolve(__dirname, 'src/components/jsx'),
+                use:{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'react'],
+                    }
+                },
+                exclude: /node_modules/
             }
         ]
     },
