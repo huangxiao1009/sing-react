@@ -4,7 +4,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
-const fileDistPath = path.resolve(__dirname, 'dist/');
+const fileDistPath = path.resolve(__dirname, 'server/dist/');
 const fileSrcPath = path.resolve(__dirname, 'src/');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -34,6 +34,7 @@ function initHtmlWebpackPlugin() {
                 removeComments: true,
                 collapseWhitespace: true
             },
+            favicon:'favicon/favicon.ico'
         };
         const filenameShort = filename.split('.')[0];
         entries[filenameShort] && (HtmlWebpackPluginOptions.chunks = ['runtime', 'commons', filenameShort]);
