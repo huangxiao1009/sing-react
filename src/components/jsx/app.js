@@ -7,7 +7,8 @@ class App extends Component{
     render(){
         return(
             <div className="app_container">
-                <Banner source="https://music.51vv.com/api/activity/info/querySpaceUser.htm?userID=7848965" />
+                111
+                <Banner source="/data/classification.htm" />
             </div>
         )
     }

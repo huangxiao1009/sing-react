@@ -8,6 +8,7 @@ const fileDistPath = path.resolve(__dirname, 'server/dist/');
 const fileSrcPath = path.resolve(__dirname, 'src/');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const plugins = [];
 const entries = {};
 //创建entry
@@ -23,18 +24,19 @@ function initEntries() {
 initEntries();
 //创建plugins
 function initHtmlWebpackPlugin() {
-    const files = fs.readdirSync(path.join(fileSrcPath, 'html'));
-    files.forEach(function (filename) {
+    const filesHtml = fs.readdirSync(path.join(fileSrcPath, 'html'));
+    const filesScss = fs.readdirSync(path.join(fileSrcPath, 'scss'))
+    filesHtml.forEach(function (filename) {
         let HtmlWebpackPluginOptions = {
-            template: path.join(fileSrcPath, 'html',filename),
+            template: path.join(fileSrcPath, 'html', filename),
             title: 'Output Man....',
             filename: `html/${filename}`,
-            inject:'body',
+            inject: 'body',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true
             },
-            favicon:'favicon/favicon.ico'
+            favicon: 'favicon/favicon.ico'
         };
         const filenameShort = filename.split('.')[0];
         entries[filenameShort] && (HtmlWebpackPluginOptions.chunks = ['runtime', 'commons', filenameShort]);
@@ -42,6 +44,16 @@ function initHtmlWebpackPlugin() {
         plugins.push(htmlPlu);
 
     });
+    // filesScss.forEach(function (filename) {
+    //     let extPlu = new ExtractTextPlugin({
+    //         filename: (getPath) => {
+    //             return getPath('scss/[name].scss').replace('css/js', 'css')
+    //         },
+    //         allChunks: true
+    //     });
+    //     plugins.push(extPlu);
+    // });
+
 }
 initHtmlWebpackPlugin();
 //每次都清除一次dist文件夹
@@ -65,6 +77,24 @@ module.exports = {
                     'css-loader'
                 ]
             },
+            // {
+            //     test: /\.scss$/,
+            //     use: ExtractTextPlugin({
+            //         fallback:'style-loader',
+            //         use:[
+            //             'css-loader',
+            //             'sass-loader'
+            //         ]
+            //     })
+            // },
+            {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
             {
                 test: /\.html$/,
                 // loader: 'html-loader'
@@ -72,7 +102,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 include: path.resolve(__dirname, 'src/js'),
-                use:{
+                use: {
                     loader: 'babel-loader',
                     options: {
                         presets: ['es2015', 'react'],
@@ -83,7 +113,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 include: path.resolve(__dirname, 'src/components/jsx'),
-                use:{
+                use: {
                     loader: 'babel-loader',
                     options: {
                         presets: ['es2015', 'react'],

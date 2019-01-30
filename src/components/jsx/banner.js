@@ -1,30 +1,56 @@
-import React,{Component} from 'react';
-class Banner extends Component{
-    constructor(props){
+import React, {Component} from 'react';
+// import './banner.scss'
+let BannerList = function (props) {
+    return (
+        <div className="banner_container">
+            <div className="swiper-wrapper">
+                {
+                    props.items.map((item) => {
+                        return (
+                            <div className="swiper-slide" key={item.adID}>
+                                <a href="javascript:void(0);">
+                                    <img src={item.cover||'javascript:void(0)'} alt="0"/>
+                                </a>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        </div>
+    )
+};
+class Banner extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            banners:null,
+            banners: [],
         };
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
     }
-    componentDidMount(){
+
+    componentDidMount() {
         fetch(this.props.source)
             .then(res => res.json())
-            .then(res => function () {
-                console.log(`banners:${res}`)
+            .then(res => {
+                console.log(`banners:`, res);
+                this.setState({
+                    banners: res.spaceAdHomepage || []
+                });
             })
-            .catch(err=> {
+            .catch(err => {
                 console.log(err);
             })
     }
-    componentWillUnmount(){
+
+    componentWillUnmount() {
 
     }
-    render(){
-        return(
+
+    render() {
+        return (
             <div className="banner">
-                banners
+                <BannerList items={this.state.banners}/>
             </div>
         )
     }

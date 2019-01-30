@@ -16,6 +16,12 @@ module.exports = env =>{
             port: 9000,
             index:'html/index.html',
             openPage:'html/index.html',
+            proxy:{
+                '/data/':{
+                    target:'http://localhost:3000',
+                    secure:false
+                }
+            }
             // hot:true,
             // noInfo:true
         },
