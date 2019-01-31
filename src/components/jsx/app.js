@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Banner from './banner';
+import Nav from './nav';
 class App extends Component{
     constructor(props){
         super(props);
@@ -7,8 +8,8 @@ class App extends Component{
     render(){
         return(
             <div className="app_container">
-                111
                 <Banner source="/data/classification.htm" />
+                <Nav/>
             </div>
         )
     }

@@ -4,7 +4,7 @@
 import React,{Component} from 'react';
 import ReactDom from 'react-dom';
 import App from '../components/jsx/app';
-import '../scss/index.scss'
+import '../components/scss/common.scss'
 ReactDom.render(
     <App/>,
     document.getElementById('app')

@@ -1,0 +1,15 @@
+.nav{
+  display: flex;
+  span{
+    flex-shrink: 0;
+  }
+  span.part1{
+    width: pxrem(200);
+    border:1px solid red;
+  }
+  span.part2{
+    width: pxrem(150);
+    border:1px solid blue;
+  }
+
+}

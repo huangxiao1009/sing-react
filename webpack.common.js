@@ -25,7 +25,6 @@ initEntries();
 //创建plugins
 function initHtmlWebpackPlugin() {
     const filesHtml = fs.readdirSync(path.join(fileSrcPath, 'html'));
-    const filesScss = fs.readdirSync(path.join(fileSrcPath, 'scss'))
     filesHtml.forEach(function (filename) {
         let HtmlWebpackPluginOptions = {
             template: path.join(fileSrcPath, 'html', filename),
@@ -44,15 +43,13 @@ function initHtmlWebpackPlugin() {
         plugins.push(htmlPlu);
 
     });
-    // filesScss.forEach(function (filename) {
-    //     let extPlu = new ExtractTextPlugin({
-    //         filename: (getPath) => {
-    //             return getPath('scss/[name].scss').replace('css/js', 'css')
-    //         },
-    //         allChunks: true
-    //     });
-    //     plugins.push(extPlu);
-    // });
+
+    //从js中提取css
+    let extPlu = new ExtractTextPlugin({
+        filename: `css/[name]-[id]-[chunkhash].css`,
+        allChunks: true
+    });
+    plugins.push(extPlu);
 
 }
 initHtmlWebpackPlugin();
@@ -77,23 +74,23 @@ module.exports = {
                     'css-loader'
                 ]
             },
-            // {
-            //     test: /\.scss$/,
-            //     use: ExtractTextPlugin({
-            //         fallback:'style-loader',
-            //         use:[
-            //             'css-loader',
-            //             'sass-loader'
-            //         ]
-            //     })
-            // },
             {
                 test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader',
+                        'sass-loader',
+                        {
+                            loader:'sass-resources-loader',
+                            options:{
+                                resources:[
+                                    path.resolve(__dirname, 'src/components/scss/common.scss')
+                                ]
+                            }
+                        }
+                    ],
+                })
             },
             {
                 test: /\.html$/,

@@ -9,7 +9,7 @@ module.exports = env =>{
     console.log('env:',env);
     return merge(common,{
         mode: 'development',
-        devtool:'inline-source-map',
+        // devtool:'inline-source-map',
         devServer:{
             contentBase:path.join(__dirname,''),
             compress:true,
@@ -22,8 +22,6 @@ module.exports = env =>{
                     secure:false
                 }
             }
-            // hot:true,
-            // noInfo:true
         },
         plugins:[
             //模块热更新
