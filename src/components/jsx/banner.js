@@ -6,7 +6,7 @@ let BannerList = function (props) {
         if(!ref) return;
         //swiper-wrapper已被挂载到dom中
         if(props.items && props.items.length){
-            console.log(document.querySelector('.banner_container'),'======')
+            console.log(document.querySelector('.banner_container'),'======');
             window.swiperBanner = new Swiper('.banner_container',{
                 direction:'horizontal',
                 autoplay:3000,

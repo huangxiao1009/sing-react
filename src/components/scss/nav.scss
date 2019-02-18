@@ -1,15 +1,51 @@
 .nav{
   display: flex;
+  margin: pxrem(30) 0;
   span{
     flex-shrink: 0;
+    height:pxrem(80);
+    line-height: pxrem(80);
+    font-size: pxrem(24);
   }
   span.part1{
-    width: pxrem(200);
-    border:1px solid red;
+    width: pxrem(100);
+    padding-left:pxrem(70);
+    margin: 0 pxrem(20) pxrem(30);
+
   }
   span.part2{
-    width: pxrem(150);
-    border:1px solid blue;
+    width: pxrem(90);
+    padding-left: pxrem(70);
+  }
+  span.singer{
+    background: url("../../images/singer.png") no-repeat left center;
+    background-size: pxrem(58) pxrem(62);
+  }
+  span.classify{
+    background: url("../../images/classify.png") no-repeat left center;
+    background-size: pxrem(62) pxrem(62);
+  }
+  span.checked{
+    background: url("../../images/checked.png") no-repeat left center;
+    background-size: pxrem(58) pxrem(62);
   }
 
+  span.sing-room{
+    background: url("../../images/sing_room.png") no-repeat left center;
+    background-size: pxrem(58) pxrem(58);
+  }
+
+  span.live{
+    background: url("../../images/live.png") no-repeat left center;
+    background-size: pxrem(58) pxrem(58);
+  }
+
+  span.sing-together{
+    background: url("../../images/sing_together.png") no-repeat left center;
+    background-size: pxrem(58) pxrem(58);
+  }
+  span.sing-clear{
+    background: url("../../images/sing_clear.png") no-repeat left center;
+    background-size: pxrem(58) pxrem(58);
+  }
 }

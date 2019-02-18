@@ -56,7 +56,6 @@ initHtmlWebpackPlugin();
 //每次都清除一次dist文件夹
 plugins.push(new CleanWebpackPlugin(['dist/']));
 
-
 module.exports = {
     context: __dirname,
     entry: entries,
@@ -85,7 +84,7 @@ module.exports = {
                             loader:'sass-resources-loader',
                             options:{
                                 resources:[
-                                    path.resolve(__dirname, 'src/components/scss/common.scss')
+                                    path.resolve(__dirname, 'src/components/scss/var.scss')
                                 ]
                             }
                         }
@@ -117,6 +116,17 @@ module.exports = {
                     }
                 },
                 exclude: /node_modules/
+            },
+            {
+                test:/\.(jpg|jpeg|png|gif)$/,
+                use:{
+                    loader:'url-loader',
+                    options:{
+                        limit:8192,
+                        name:'images/[hash:8].[name].[ext]',
+                        publicPath:'/server/dist/'
+                    }
+                }
             }
         ]
     },

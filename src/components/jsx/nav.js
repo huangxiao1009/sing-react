@@ -33,14 +33,14 @@ class Nav extends Component {
     }
     render() {
         return (
-            <div className="nav flex flex-w flex-pack-justify">
-                <span className="part1">歌手</span>
-                <span className="part1">分类</span>
-                <span className="part1">已点</span>
-                <span className="part2">歌房</span>
-                <span className="part2">直播</span>
-                <span className="part2">合唱</span>
-                <span className="part2">清唱</span>
+            <div className="nav flex flex-w flex-pack-center">
+                <span className="part1 singer">歌手</span>
+                <span className="part1 classify">分类</span>
+                <span className="part1 checked">已点</span>
+                <span className="part2 sing-room">歌房</span>
+                <span className="part2 live">直播</span>
+                <span className="part2 sing-together">合唱</span>
+                <span className="part2 sing-clear">清唱</span>
             </div>
         )
     }

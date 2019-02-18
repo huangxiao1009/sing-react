@@ -1,0 +1,40 @@
+.songs-container{
+  .song-tabs{
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    &::-webkit-scrollbar{
+      display: none;
+    }
+    ul{
+      list-style: none;
+      overflow: hidden;
+      width: pxrem(900);
+      li{
+        display: inline-block;
+        height:pxrem(80);
+        line-height: pxrem(80);
+        font-size: pxrem(24);
+        margin: 0 pxrem(25);
+      }
+      li.active{
+        color: #ff3e3d;
+        position: relative;
+        &::after{
+          content: '';
+          display: inline-block;
+          width:80%;
+          height:pxrem(6);
+          background-color: #ff3e3d;
+          position: absolute;
+          left: 50%;
+          bottom:0;
+          -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+        }
+      }
+    }
+  }
+}
