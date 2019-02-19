@@ -1,17 +1,43 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import Banner from './banner';
 import Nav from './nav';
 import Songs from './songs';
-class App extends Component{
-    constructor(props){
+import PullDown from './pulldown';
+class App extends Component {
+    constructor(props) {
         super(props);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+
     }
-    render(){
-        return(
+
+    componentDidMount() {
+        this.initRefresh();
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    //下拉刷新
+    initRefresh() {
+        window.addEventListener('scroll', this.handleRefreshScroll.bind(this))
+    }
+
+    handleRefreshScroll() {
+        console.log('rrr')
+    }
+
+    render() {
+        return (
             <div className="app_container">
-                <Banner source="/data/classification.htm" />
-                <Nav/>
-                <Songs/>
+                <PullDown/>
+                <div className="content">
+                    <Banner source="/data/classification.htm"/>
+                    <Nav/>
+                    <Songs/>
+                </div>
+
             </div>
         )
     }

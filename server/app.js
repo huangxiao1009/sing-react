@@ -65,6 +65,17 @@ app.get('/data/songs_new.htm', function (req, res) {
             console.log(err);
         });
 });
+app.get('/data/songs_age.htm', function (req, res) {
+    readFileJson('songs_age.json')
+        .then(data => {
+            res.send(data);
+        }, msg => {
+            console.log('暂时无数据~')
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+});
 app.use(favicon(path.join(__dirname, 'favicon', 'favicon.ico')));
 app.use('/dist', express.static('dist'));
 

@@ -40,6 +40,8 @@
     "lodash": "^4.17.11",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-lazy-load": "^3.0.13",
+    "react-lazyload-img": "^1.0.3",
     "uglifyjs-webpack-plugin": "^2.1.1"
   },
   "sideEffects": []
