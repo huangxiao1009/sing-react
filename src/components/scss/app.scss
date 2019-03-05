@@ -1,0 +1,7 @@
+.content{
+  transform: translateY(0);
+}
+.content.refreshing {
+  -webkit-transition: all .4s ease-out;
+  transition: all .4s ease-out;
+}

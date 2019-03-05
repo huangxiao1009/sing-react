@@ -4,12 +4,13 @@ class PullDown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isRefreshing: false,
             pullEnd: false,
             startX: 0,
             startY: 0,
             moveX: 0,
             moveY: 0,
+            pullDownHei:0,//下拉部分框的真实高度
+            // canRefresh:false,//可以刷新了
         };
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -19,6 +20,9 @@ class PullDown extends Component {
         this.handlerTouchStart();
         this.handlerTouchMove();
         this.handlerTouchEnd();
+        this.setState({
+            pullDownHei:this.refs.pulldownbox.clientHeight,
+        });
     }
 
     componentWillUnmount() {
@@ -26,6 +30,9 @@ class PullDown extends Component {
 
     handlerTouchStart() {
         let contentBox = document.querySelector('.content');
+
+        let pullDownBoxHei = document.querySelector('.pull-refresh').clientHeight;
+
         contentBox.addEventListener('touchstart', (e) => {
             let scrollT = document.documentElement.scrollTop || document.body.scrollTop;
             if (scrollT) return;
@@ -41,10 +48,10 @@ class PullDown extends Component {
 
     handlerTouchMove() {
         let contentBox = document.querySelector('.content');
+
         contentBox.addEventListener('touchmove', (e) => {
             let scrollT = document.documentElement.scrollTop || document.body.scrollTop;
             if (scrollT) return;
-
             let startX = e.changedTouches[0].clientX;
             let startY = e.changedTouches[0].clientY;
             let moveX = startX - this.state.startX;
@@ -52,50 +59,50 @@ class PullDown extends Component {
             if (moveX > 50) return;//横向滑动
             this.setState({
                 moveX: moveX,
-                moveY: moveY
+                moveY: moveY,
             });
-            if (moveY > 100) {
+            this.props.changeRefreshState(false);
+            if (moveY > 250) {//最多下拉100距离
                 this.setState({
                     pullEnd: true,
                 });
+
                 return;
+            }else{
+                this.setState({
+                    pullEnd: false,
+                });
             }
             contentBox.style.transform = `translateY(${moveY}px)`;
-
-            console.log(moveY, '=======moveY')
-
+            // console.log(moveY, '=======moveY')
         })
     }
 
     handlerTouchEnd(e) {
-        let contentBox, pullDownBox, pullDownBoxH,translateDis;
+        let contentBox, pullDownBox,translateDis;
         contentBox = document.querySelector('.content');
         pullDownBox = document.querySelector('.pull-refresh');
-        pullDownBoxH = pullDownBox.clientHeight;
 
         contentBox.addEventListener('touchend', (e) => {
+            //点击榜单按钮不触发touchend回调
+            if(e.target.nodeName ==='LI'&&e.target.parentNode.className.indexOf('tabs-nav')>-1) return;
             if(contentBox.style.transform){
                 translateDis =Number(/translateY\((-?\d+)px\)/.exec(contentBox.style.transform)[1]);
-                if(translateDis >= this.state.moveY){
-                    this.setState({
-                        isRefreshing:true
-                    })
+                if(!translateDis) return;
+                if(this.state.pullDownHei <= this.state.moveY){
+                    this.props.changeRefreshState(true);
+                    contentBox.style.transform=`translateY(${this.state.pullDownHei}px)`;
                 }
-                console.log(translateDis,'===')
 
             }
-
-
-
-
         })
     }
 
     render() {
         return (
-            <div className="pull-refresh">
+            <div className={ this.state.pullEnd ? 'pull-refresh' :'pull-refresh' } ref="pulldownbox">
                 {
-                    this.state.isRefreshing
+                    this.props.contentRefreshing
                         ?
                         <div className="isloading">正在刷新...</div>
                         :

@@ -7,7 +7,8 @@ const port = 3000;
 //读文件
 const readFileJson = (file) => {
     let promise = new Promise((resolve, reject) => {
-        fs.readFile('./data/' + file, 'utf-8', (err, data) => {
+
+        fs.readFile(`${process.cwd()}/server/data/${file}`, 'utf-8', (err, data) => {
             if (err) {
                 console.log('read file error', err);
                 reject("read file error!")

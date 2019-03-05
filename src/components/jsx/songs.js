@@ -6,7 +6,7 @@ import '../scss/songs.scss'
 let Tabs = function (props) {
     return (
         <div className="songs-tabs">
-            <ul className="flex flex-pack-justify" onClick={e => props.handleClick(e)}>
+            <ul className="tabs-nav flex flex-pack-justify" onClick={e => props.handleClick(e)}>
                 <li className={props.listType === 1 ? 'active' : ''} data-type="1">猜你喜欢</li>
                 <li className={props.listType === 2 ? 'active' : ''} data-type="2">热歌榜</li>
                 <li className={props.listType === 3 ? 'active' : ''} data-type="3">点唱榜</li>
@@ -28,8 +28,8 @@ let List = function (props) {
                     props.items.map((item, index) => {
                         return (
                             <li key={item.songID || index}>
-                                <LazyLoad  width={50} height={50}>
-                                    <img src={item.CDNPiclink1|| require("../../images/default_head@3x.png")}  alt=""/>
+                                <LazyLoad height={50}>
+                                    <img src={item.CDNPiclink1 || require("../../images/default_head@3x.png")} alt=""/>
                                 </LazyLoad>
                                 <div className="song-info flex flex-v flex-pack-center">
                                     <span className="song-name">{item.name || ''}</span>
@@ -68,6 +68,7 @@ class Songs extends Component {
             firstPageEmpty: false,
             allLoaded: false,
             loading: false,
+            hidePullDownTimer: null,//滑动部分回到顶部的定时器
         };
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -77,8 +78,22 @@ class Songs extends Component {
         this.fetchSongs(1);
     }
 
-    componentWillUnmount() {
+    componentWillReceiveProps(props) {
+        if (props.contentRefreshing) {
+            this.setState({
+                firstPageEmpty: false,
+                allLoaded: false,
+                loading: false,
+            });
+            this.fetchSongs(this.state.listType);
+        }
+    }
 
+    componentWillUnmount() {
+        this.setState({
+                hidePullDownTimer: null
+            }
+        );
     }
 
     fetchSongs(listType) {
@@ -94,6 +109,18 @@ class Songs extends Component {
                     songsData: res.songs || [],
                 });
                 this.getCurPageData();//加载首页
+                if (this.props.contentRefreshing) {
+                    if(this.state.hidePullDownTimer){
+                        clearInterval(this.state.hidePullDownTimer);
+                    }
+                    this.setState({
+                        hidePullDownTimer: setTimeout(() => {
+                            this.props.changeRefreshState(false);
+                            document.querySelector('.content').style.transform = 'translateY(0)';
+                        }, 600)
+                    });
+
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -107,7 +134,7 @@ class Songs extends Component {
         });
         let start = (this.state.curPage - 1) * this.state.viewNumber;
         let end = start + this.state.viewNumber;
-        let data = this.state.songsData.slice(start, end);
+        let data = this.state.songsData.slice(start, end);//假分页
         console.log('当前页：', start, end, data);
         if (this.state.curPage === 1 && !data.length) {
             //首页无数据
@@ -171,6 +198,7 @@ class Songs extends Component {
     unBindScrollHandler() {
         window.onscroll = null;
     }
+
     render() {
         return (
             <div className="songs-container">

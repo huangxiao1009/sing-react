@@ -3,41 +3,45 @@ import Banner from './banner';
 import Nav from './nav';
 import Songs from './songs';
 import PullDown from './pulldown';
+import '../scss/app.scss'
 class App extends Component {
     constructor(props) {
         super(props);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.state = {
+            contentRefreshing:false,//列表部分正在刷新
+            refreshFinished:false,//列表刷新完成
 
+        };
     }
 
     componentDidMount() {
-        this.initRefresh();
+
     }
 
     componentWillUnmount() {
 
     }
-
-    //下拉刷新
-    initRefresh() {
-        window.addEventListener('scroll', this.handleRefreshScroll.bind(this))
+    changeRefreshState(refState){
+        this.setState({
+            contentRefreshing:refState,
+        })
     }
-
-    handleRefreshScroll() {
-        console.log('rrr')
+    changeRefFinished(isFinished){
+        this.setState({
+            refreshFinished:isFinished
+        })
     }
-
     render() {
         return (
             <div className="app_container">
-                <PullDown/>
-                <div className="content">
+                <PullDown changeRefreshState ={(state) =>{this.changeRefreshState(state)}} contentRefreshing={this.state.contentRefreshing} />
+                <div className={this.state.contentRefreshing ?'content refreshing':'content'}>
                     <Banner source="/data/classification.htm"/>
                     <Nav/>
-                    <Songs/>
+                    <Songs changeRefreshState ={(state) =>{this.changeRefreshState(state)}} contentRefreshing={this.state.contentRefreshing}/>
                 </div>
-
             </div>
         )
     }
