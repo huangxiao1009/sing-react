@@ -1,14 +1,14 @@
-
 /**
  * Created by hx on 2019/1/7.
  */
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
-const fileDistPath = path.resolve(__dirname, 'dist/');
+const fileDistPath = path.resolve(__dirname, 'server/dist/');
 const fileSrcPath = path.resolve(__dirname, 'src/');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const plugins = [];
 const entries = {};
 //创建entry
@@ -24,35 +24,44 @@ function initEntries() {
 initEntries();
 //创建plugins
 function initHtmlWebpackPlugin() {
-    const files = fs.readdirSync(path.join(fileSrcPath, 'html'));
-    files.forEach(function (filename) {
+    const filesHtml = fs.readdirSync(path.join(fileSrcPath, 'html'));
+    filesHtml.forEach(function (filename) {
         let HtmlWebpackPluginOptions = {
             template: path.join(fileSrcPath, 'html', filename),
             title: 'Output Man....',
             filename: `html/${filename}`,
+            inject: 'body',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true
             },
+            favicon: 'favicon/favicon.ico'
         };
         const filenameShort = filename.split('.')[0];
-        entries[filenameShort] && (HtmlWebpackPluginOptions.chunks = ['runtime','commons',filenameShort]);
+        entries[filenameShort] && (HtmlWebpackPluginOptions.chunks = ['runtime', 'commons', filenameShort]);
         let htmlPlu = new HtmlWebpackPlugin(HtmlWebpackPluginOptions);
         plugins.push(htmlPlu);
 
     });
+
+    //从js中提取css
+    let extPlu = new ExtractTextPlugin({
+        filename: `css/[name]-[id]-[chunkhash].css`,
+        allChunks: true
+    });
+    plugins.push(extPlu);
+
 }
 initHtmlWebpackPlugin();
 //每次都清除一次dist文件夹
 plugins.push(new CleanWebpackPlugin(['dist/']));
-
 
 module.exports = {
     context: __dirname,
     entry: entries,
     output: {
         path: fileDistPath,
-        filename: "js/[name].[chunkhash].js",
+        filename: "js/[name].[hash].js",
         // publicPath:"https://music.51vv.com"
     },
     module: {
@@ -64,7 +73,61 @@ module.exports = {
                     'css-loader'
                 ]
             },
-            {test: /\.html$/, loader: 'html-loader'}
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader',
+                        'sass-loader',
+                        {
+                            loader:'sass-resources-loader',
+                            options:{
+                                resources:[
+                                    path.resolve(__dirname, 'src/components/scss/var.scss')
+                                ]
+                            }
+                        }
+                    ],
+                })
+            },
+            {
+                test: /\.html$/,
+                // loader: 'html-loader'
+            },
+            {
+                test: /\.(js|jsx)$/,
+                include: path.resolve(__dirname, 'src/js'),
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'react'],
+                    }
+                },
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(js|jsx)$/,
+                include: path.resolve(__dirname, 'src/components/jsx'),
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'react'],
+                    }
+                },
+                exclude: /node_modules/
+            },
+            {
+                test:/\.(jpg|jpeg|png|gif)$/,
+                use:{
+                    loader:'url-loader',
+                    options:{
+                        limit:8192,
+                        name:'images/[hash:8].[name].[ext]',
+                        publicPath:'/server/dist/'
+                    }
+                }
+            }
         ]
     },
     optimization: {
@@ -94,7 +157,7 @@ module.exports = {
                 }
             }
         },
-        runtimeChunk:{
+        runtimeChunk: {
             name: "runtime"
         }
     },

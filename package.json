@@ -4,19 +4,26 @@
   "private": true,
   "scripts": {
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open --color --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "dev": "webpack-dev-server --watch --env.NODE_ENV=dev --open --color --config webpack.dev.js",
+    "build": "webpack --env.NODE_ENV=prod --config webpack.prod.js"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^2.1.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^3.0.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "sass-resources-loader": "^2.0.0",
     "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14",
@@ -31,6 +38,10 @@
   ],
   "dependencies": {
     "lodash": "^4.17.11",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-lazy-load": "^3.0.13",
+    "react-lazyload-img": "^1.0.3",
     "uglifyjs-webpack-plugin": "^2.1.1"
   },
   "sideEffects": []

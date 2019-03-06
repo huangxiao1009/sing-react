@@ -1,0 +1,116 @@
+.songs-container{
+  .songs-tabs{
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    &::-webkit-scrollbar{
+      display: none;
+    }
+    ul{
+      list-style: none;
+      overflow: hidden;
+      width: pxrem(900);
+      li{
+        display: inline-block;
+        height:pxrem(80);
+        line-height: pxrem(80);
+        font-size: pxrem(24);
+        margin: 0 pxrem(25);
+      }
+      li.active{
+        color: #ff3e3d;
+        position: relative;
+        &::after{
+          content: '';
+          display: inline-block;
+          width:80%;
+          height:pxrem(4);
+          background-color: #ff3e3d;
+          position: absolute;
+          left: 50%;
+          bottom:0;
+          -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+        }
+      }
+    }
+  }
+  .songs-list{
+    ul{
+      li{
+        height:pxrem(120);
+        overflow: hidden;
+        position: relative;
+        &::after{
+          content: '';
+          display: block;
+          width: 100%;
+          background-color: #ccc;
+          height:1px;
+          -webkit-transform: scaleY(.5);
+          transform: scaleY(.5);
+          position: absolute;
+          bottom:0;
+          left:pxrem(15);
+        }
+        img{
+          display: block;
+          width: pxrem(80);
+          height: pxrem(80);
+          margin:pxrem(20) 0 0 pxrem(15);
+          float: left;
+        }
+        .song-info{
+          float: left;
+          height:100%;
+          max-width:pxrem(500);
+          margin-left: pxrem(30);
+          .song-name{
+            font-size: pxrem(24);
+            color: #000;
+            margin-bottom: pxrem(15);
+          }
+          .singer{
+            font-size: pxrem(20);
+            color: #ccc;
+            em{
+              font-style: normal;
+              font-weight: normal;
+            } 
+          }
+        }
+        .play-btn{
+          float: right;
+          width:pxrem(90);
+          height:pxrem(40);
+          line-height: pxrem(40);
+          border:1px solid #ff3e3d;
+          color: #ff3e3d;
+          font-size: pxrem(22);
+          border-radius: pxrem(30);
+          text-align: center;
+          margin:pxrem(40) pxrem(20) 0 0;
+        }
+      }
+    }
+  }
+  .loading,.allloaded{
+    height:pxrem(120);
+    line-height: pxrem(120);
+    text-align: center;
+    font-size: pxrem(24);
+    color: #ccc;
+  }
+  .first-empty{
+    height:pxrem(400);
+    line-height: pxrem(400);
+    text-align: center;
+    font-size: pxrem(24);
+    color: #ccc;
+  }
+  .LazyLoad{
+    float: left;
+  }
+}

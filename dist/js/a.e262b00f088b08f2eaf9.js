@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{3:function(e,n,c){"use strict";c.r(n);var o,t,d=c(1),l=c.n(d),a=c(2),i=c(0);document.body.appendChild((o=document.createElement("div"),t=document.createElement("button"),o.innerHTML=l.a.join(["hello","webpack"]," 000"),o.innerHTML="click me!",o.classList.add("hello"),t.onclick=a.default,o.appendChild(t),o)),console.log(Object(i.a)(2),"=========")}},[[3,1,0]]]);
-//# sourceMappingURL=a.e262b00f088b08f2eaf9.js.map

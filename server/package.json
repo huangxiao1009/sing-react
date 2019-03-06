@@ -1,0 +1,15 @@
+{
+  "name": "sing_server",
+  "version": "1.0.0",
+  "description": "唱歌页面服务端",
+  "main": "index.js",
+  "scripts": {
+    "server": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "serve-favicon": "^2.5.0"
+  }
+}
